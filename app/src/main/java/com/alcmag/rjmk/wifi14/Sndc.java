@@ -65,7 +65,23 @@ public class Sndc extends Activity {
                 wc.status = WifiConfiguration.Status.ENABLED;
                 wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
                 wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+                WifiManager wfMgr = (WifiManager) super.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                int networkId = wfMgr.addNetwork(wc);
+                if (networkId != -1) {
+                    // success, can call wfMgr.enableNetwork(networkId, true) to connect
 
+                    wifiManager.addNetwork(conf);
+                    List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
+                    for (WifiConfiguration i : list) {
+                        if (i.SSID != null && i.SSID.equals("\"" + networkSSID + "\"")) {
+                            wifiManager.disconnect();
+                            wifiManager.enableNetwork(i.networkId, true);
+                            wifiManager.reconnect();
+
+                            break;
+                        }
+                    }
+                }
                 wifiManager.setWifiEnabled(true);
                 int netId = wifiManager.addNetwork(wc);
                 if (netId == -1) {
@@ -90,34 +106,6 @@ public class Sndc extends Activity {
             }
             return -1;
         }
-        //WifiConfiguration wfc = new WifiConfiguration();
-        //for open wifi
-        //wfc.SSID = "\"".concat(ssid).concat("\"");
-        //wfc.status = WifiConfiguration.Status.DISABLED;
-        //wfc.preSharedKey = "\"".concat(password).concat("\"");
 
-        conf.wepKeys[0] = "\"" + networkPass + "\"";
-        conf.wepTxKeyIndex = 0;
-        conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-        conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-        conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-        conf.preSharedKey = "\""+ networkPass +"\"";
-        WifiManager wfMgr = (WifiManager) super.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        int networkId = wfMgr.addNetwork(wc);
-        if (networkId != -1) {
-            // success, can call wfMgr.enableNetwork(networkId, true) to connect
-        }
-        WifiManager wifiManager = (WifiManager)super.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        wifiManager.addNetwork(conf);
-        List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
-        for( WifiConfiguration i : list ) {
-            if(i.SSID != null && i.SSID.equals("\"" + networkSSID + "\"")) {
-                wifiManager.disconnect();
-                wifiManager.enableNetwork(i.networkId, true);
-                wifiManager.reconnect();
-
-                break;
-            }
-        }
     }
 }
