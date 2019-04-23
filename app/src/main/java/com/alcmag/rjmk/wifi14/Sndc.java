@@ -61,13 +61,6 @@ public class Sndc extends Activity {
                 wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
                 wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
                 wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-
-                wc.preSharedKey = "\"".concat(password).concat("\"");
-                //others
-                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
                 wc.preSharedKey = "\"PASSWORD\"";
                 wc.status = WifiConfiguration.Status.ENABLED;
                 wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
@@ -101,6 +94,7 @@ public class Sndc extends Activity {
         //for open wifi
         //wfc.SSID = "\"".concat(ssid).concat("\"");
         //wfc.status = WifiConfiguration.Status.DISABLED;
+        //wfc.preSharedKey = "\"".concat(password).concat("\"");
 
         conf.wepKeys[0] = "\"" + networkPass + "\"";
         conf.wepTxKeyIndex = 0;
@@ -109,7 +103,7 @@ public class Sndc extends Activity {
         conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
         conf.preSharedKey = "\""+ networkPass +"\"";
         WifiManager wfMgr = (WifiManager) super.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        int networkId = wfMgr.addNetwork(wfc);
+        int networkId = wfMgr.addNetwork(wc);
         if (networkId != -1) {
             // success, can call wfMgr.enableNetwork(networkId, true) to connect
         }
