@@ -30,6 +30,44 @@ public class Sndc extends Activity {
                 WifiConfiguration wc = new WifiConfiguration();
                 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                 wc.SSID = "\"NETWORK_NAME\"";
+                wc.priority = 40;
+                wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+                wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+                wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+                wc.allowedAuthAlgorithms.clear();
+                wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+                //WEP
+                wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+                wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+                wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+                wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+                wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
+                wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+
+                if (isHexString(password)) wfc.wepKeys[0] = password;
+                else wfc.wepKeys[0] = "\"".concat(password).concat("\"");
+                wc.wepTxKeyIndex = 0;
+                //WPA and WPA2
+                wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+                wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+                wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+                wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+
+                wc.preSharedKey = "\"".concat(password).concat("\"");
+                //others
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
                 wc.preSharedKey = "\"PASSWORD\"";
                 wc.status = WifiConfiguration.Status.ENABLED;
                 wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
@@ -59,48 +97,11 @@ public class Sndc extends Activity {
             }
             return -1;
         }
-        WifiConfiguration wfc = new WifiConfiguration();
+        //WifiConfiguration wfc = new WifiConfiguration();
         //for open wifi
-        wfc.SSID = "\"".concat(ssid).concat("\"");
-        wfc.status = WifiConfiguration.Status.DISABLED;
-        wfc.priority = 40;
-        wfc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-        wfc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-        wfc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-        wfc.allowedAuthAlgorithms.clear();
-        wfc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-        wfc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-        //WEP
-        wfc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-        wfc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-        wfc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-        wfc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-        wfc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
-        wfc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-        wfc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+        //wfc.SSID = "\"".concat(ssid).concat("\"");
+        //wfc.status = WifiConfiguration.Status.DISABLED;
 
-        if (isHexString(password)) wfc.wepKeys[0] = password;
-        else wfc.wepKeys[0] = "\"".concat(password).concat("\"");
-        wfc.wepTxKeyIndex = 0;
-        //WPA and WPA2
-        wfc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-        wfc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-        wfc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-        wfc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-        wfc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-
-        wfc.preSharedKey = "\"".concat(password).concat("\"");
-        //others
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
         conf.wepKeys[0] = "\"" + networkPass + "\"";
         conf.wepTxKeyIndex = 0;
         conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
